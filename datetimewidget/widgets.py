@@ -100,11 +100,13 @@ toJavascript_re = re.compile(r'(?<!\w)(' + '|'.join(dateConversiontoJavascript.k
 
 BOOTSTRAP_INPUT_TEMPLATE = {
     2: """
-       <div id="%(id)s"  class="controls input-append date">
+       <div class="control-group">
            %(label)s
-           %(rendered_widget)s
-           %(clear_button)s
-           <span class="add-on"><i class="icon-th"></i></span>
+           <div id="%(id)s-wrapper"  class="controls input-append date">
+               %(rendered_widget)s
+               %(clear_button)s
+               <span class="add-on"><i class="fa fa-calendar"></i></span>
+           </div>
        </div>
        <script type="text/javascript">
            $("#%(id)s").datetimepicker({%(options)s});
@@ -123,10 +125,10 @@ BOOTSTRAP_INPUT_TEMPLATE = {
        """
        }
 
-CLEAR_BTN_TEMPLATE = {2: """<span class="add-on"><i class="icon-remove"></i></span>""",
+CLEAR_BTN_TEMPLATE = {2: """<span class="add-on"><i class="fa fa-times"></i></span>""",
                       3: """<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>"""}
 
-LABEL_TEMPLATE = {2: """<span class="add-on">%(label)s</span>""",
+LABEL_TEMPLATE = {2: """<label class="control-label">%(label)s</label>""",
                   3: """<span class="input-group-addon">%(label)s</span>"""}
 
 quoted_options = set([
@@ -336,4 +338,3 @@ class TimeWidget(PickerWidgetMixin, TimeInput):
         options['format'] = options.get('format', 'hh:ii')
 
         super(TimeWidget, self).__init__(attrs, options, usel10n, bootstrap_version)
-
