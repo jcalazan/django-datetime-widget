@@ -102,7 +102,7 @@ BOOTSTRAP_INPUT_TEMPLATE = {
     2: """
        <div class="control-group">
            %(label)s
-           <div id="%(id)s-wrapper"  class="controls input-append date">
+           <div id="%(id)s"  class="controls input-append date">
                %(rendered_widget)s
                %(clear_button)s
                <span class="add-on"><i class="fa fa-calendar"></i></span>
@@ -227,6 +227,12 @@ class PickerWidgetMixin(object):
 
     def render(self, name, value, attrs=None):
         final_attrs = self.build_attrs(attrs)
+        # Use provided id or generate hex to avoid collisions in document
+        id = final_attrs.get('id', uuid.uuid4().hex)
+
+        if final_attrs['id']:
+            final_attrs['id'] = ''.join([final_attrs['id'],'-input'])
+
         rendered_widget = super(PickerWidgetMixin, self).render(name, value, final_attrs)
 
         #if not set, autoclose have to be true.
@@ -238,9 +244,6 @@ class PickerWidgetMixin(object):
             options_list.append("%s: %s" % (key, quote(key, value)))
 
         js_options = ",\n".join(options_list)
-
-        # Use provided id or generate hex to avoid collisions in document
-        id = final_attrs.get('id', uuid.uuid4().hex)
 
         clearBtn = quote('clearBtn', self.options.get('clearBtn', 'true')) == 'true'
         labelField = final_attrs.get('label', False)
