@@ -102,7 +102,7 @@ BOOTSTRAP_INPUT_TEMPLATE = {
     2: """
        <div class="control-group">
            %(label)s
-           <div id="%(id)s"  class="controls input-append date">
+           <div id="%(id)s"  class="controls input-append date django-datetime-widget">
                %(rendered_widget)s
                %(clear_button)s
                <span class="add-on"><i class="fa fa-calendar"></i></span>
