@@ -5,6 +5,7 @@ from datetime import datetime
 import re
 import uuid
 
+from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.forms import forms, widgets
 from django.forms.widgets import MultiWidget, DateTimeInput, DateInput, TimeInput
 from django.utils.formats import get_format, get_language
@@ -55,7 +56,7 @@ def get_supported_language(language_country_code):
         return 'en'
 
     # Check full language & country code against the supported languages as there are dual entries
-    # in the list eg. zh-CN (assuming that is a language country code)
+    # in the list eg. zh-CN (assuming that is a language country code)m
     if language_country_code in supported_languages:
         return language_country_code
 
@@ -262,15 +263,15 @@ class PickerWidgetMixin(object):
 
     def _media(self):
 
-        js = ["js/bootstrap-datetimepicker.js"]
+        js = [static("js/bootstrap-datetimepicker.js")]
 
         language = self.options.get('language', 'en')
         if language != 'en':
-            js.append("js/locales/bootstrap-datetimepicker.%s.js" % language)
+            js.append(static("js/locales/bootstrap-datetimepicker.%s.js" % language))
 
         return widgets.Media(
             css={
-                'all': ('css/datetimepicker.css',)
+                'all': (static('css/datetimepicker.css'),)
                 },
             js=js
             )
